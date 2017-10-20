@@ -1,2 +1,6 @@
-<tri-state-checkbox [state]="checkboxState" (onStateChange)="onCheckboxStateChange($event)"></tri-state-checkbox> {{ checkboxState !== null ? checkboxState : 'null' }}
+<tri-state-checkbox 
+    [(state)]="checkboxState" 
+    (onStateChange)="checkboxState=$event">
+</tri-state-checkbox> {{ checkboxState !== null ? checkboxState : 'null' }} <br>
+
 <button (click)="onClick()">Set inderminate</button>
