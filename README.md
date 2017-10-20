@@ -1,28 +1,69 @@
-# NgTriStateCheckbox
+## ngTriStateCheckbox
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.3.0.
+### Why?
+Currently, Angular doesn't provide a binding for the checkbox **indeterminate** state, so you can't set a checkbox as indeterminate without tinkering with the DOM. This component provides a wrapper around the checkbox so that you don't have to do the DOM tinkering yourself.
 
-## Development server
+### Getting Started
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+You need to clone/download this repo and copy the `src/app/tr-state-checkbox` folder to your project
 
-## Code scaffolding
+Import `TriStateCheckboxModule` in your module
+```typescript
+import { TriStateCheckboxComponent } from './tri-state-checkbox.component';
+```
+Declare `TriStateCheckboxModule` in the module imports
+```typescript
+@NgModule({
+  ..
+  imports: [
+    ..,
+    TriStateCheckboxModule
+  ],
+  ..
+})
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```
+Use the `<tri-state-checkbox>` directive as follows in your `*.component.html` or in the component `template` according to your preference
+```html
+..
+<tri-state-checkbox 
+    [state]="yourStateVariable" 
+    (onStateChange)="yourChangeEventHandler($event)">
+</tri-state-checkbox>
+..
+```
 
-## Build
+`state` could be one of the following three states,
+1. `true`  (checked)
+2. `false` (unchecked)
+3. `null`  (indeterminate)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Since `yourStateVariable` could either be a `boolean` or `null`, it should be declared with the `any` type.
+```typescript
+public yourStateVariable: any;
+```
 
-## Running unit tests
+`onStateChange` emits an event whenever a change occurs in the checkbox as a result of user interaction.
+the `$event` value will be either `true` or `false` depending on whether the checkbox is checked or unchecked.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+It is important to note that `state` is a one way binding and changes that happen as a result of user manually clicking on the checkbox won't be reflected unless it is handled appropriately in `onStateChanged` event handler method.
 
-## Running end-to-end tests
+### Example:
+The sample code below demmonstrates how the state variable can be updated in the event handler method.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+**app.component.html**
+```html
+..
+<tri-state-checkbox 
+    [(state)]="checkboxState" 
+    (onStateChange)="onCheckboxStateChange($event)">
+</tri-state-checkbox>
+..
+```
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+**app.component.ts**
+```typescript
+public onCheckboxStateChange(value: boolean) {
+    this.checkboxState = value;
+}
+```
