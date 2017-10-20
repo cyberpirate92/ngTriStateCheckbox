@@ -9,7 +9,7 @@ You need to clone/download this repo and copy the `src/app/tr-state-checkbox` fo
 
 Import `TriStateCheckboxModule` in your module
 ```typescript
-import { TriStateCheckboxComponent } from './tri-state-checkbox.component';
+import { TriStateCheckboxModule } from './tri-state-checkbox.module';
 ```
 Declare `TriStateCheckboxModule` in the module imports
 ```typescript
